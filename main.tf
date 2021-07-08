@@ -26,7 +26,10 @@ resource "aws_s3_bucket" "terraform_state" {
   versioning {
     enabled = true
   }
-
+  # Prevents Terraform from destroying or replacing this object - a great safety mechanism
+  lifecycle {
+    prevent_destroy = true
+  }
   # Enable server-side encryption by default
   server_side_encryption_configuration {
     rule {
@@ -34,6 +37,9 @@ resource "aws_s3_bucket" "terraform_state" {
         sse_algorithm = "AES256"
       }
     }
+  }
+  tags = {
+    Terraform = "true"
   }
 }
 
