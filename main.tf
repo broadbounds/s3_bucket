@@ -26,6 +26,13 @@ resource "aws_s3_bucket" "terraform_state" {
   versioning {
     enabled = true
   }
+  
+  lifecycle {
+    prevent_destroy = true
+  }
+  tags {
+    Name = "S3 Remote Terraform State Store"
+  } 
 
   # Enable server-side encryption by default
   server_side_encryption_configuration {
